@@ -1,0 +1,8 @@
+{
+  "name": "nos-react-express-auth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nos-nart/nos-react-express-auth.git",
+  "author": "nosnart <nosnart1510@gmail.com>",
+  "license": "MIT"
+}
