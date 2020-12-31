@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../App';
+import { AuthContext } from '../hooks/authContext';
 
 const Protected = () => {
   // Could have something here to check for the time when the accesstoken expires
   // and then call the refresh_token endpoint to get a new accesstoken automatically
-  const [user] = useContext(UserContext);
+  const {user} = useContext(AuthContext);
   const [content, setContent] = useState('You need to login');
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const Protected = () => {
           },
         }
       ).then(res => res.json());
-      console.log('result: ', result);
 
       if (result.data) setContent(result.data)
     }

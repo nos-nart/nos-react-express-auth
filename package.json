@@ -4,5 +4,16 @@
   "main": "index.js",
   "repository": "https://github.com/nos-nart/nos-react-express-auth.git",
   "author": "nosnart <nosnart1510@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "api:install": "cd api && yarn",
+    "ui:install": "cd ui && yarn",
+    "install": "concurrently \"yarn ui:install\" \"yarn api:install\"",
+    "api:dev": "cd api && yarn dev",
+    "ui:dev": "cd ui && yarn start",
+    "dev": "concurrently \"yarn ui:dev\" \"yarn api:dev\""
+  },
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
 }

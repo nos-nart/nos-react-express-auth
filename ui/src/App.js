@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Router, navigate } from '@reach/router';
+import Global from './styles/global';
 
-import Navigation from './components/Navigation';
 import Login from './components/Login';
 import Register from './components/Register';
 import Protected from './components/Protected';
 import Content from './components/Content';
+import { AuthContext } from './hooks/authContext';
 
-export const UserContext = React.createContext([]);
 
 function App() {
-  const [user, setUser] = useState({});
+  const { user, setUser } = React.useContext(AuthContext)
   const [loading, setLoading] = useState(true);
-
-  const logOutCallback = async () => {
-    await fetch('http://localhost:4000/logout', {
-      method: 'POST',
-      credentials: 'include', // Needed to include the cookie
-    });
-    // Clear user from context
-    setUser({});
-    // Navigate back to startpage
-    navigate('/');
-  }
 
   // First thing, check if a refreshtoken exist
   useEffect(() => {
@@ -34,9 +23,7 @@ function App() {
           'Content-Type': 'application/json',
         }
       })).json();
-        setUser({
-          accesstoken: result.accesstoken,
-        });
+        setUser({accesstoke: result.accesstoken});
         setLoading(false);
     }
     checkRefreshToken();
@@ -45,9 +32,9 @@ function App() {
   if (loading) return <div>Loading ...</div>
 
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <>
+      <Global />
       <div className="app">
-        <Navigation logOutCallback={logOutCallback} />
         <Router id="router">
           <Login path="login" />
           <Register path="register" />
@@ -55,7 +42,7 @@ function App() {
           <Content path="/" />
         </Router>
       </div>
-    </UserContext.Provider>
+    </>
   );
 }
 
